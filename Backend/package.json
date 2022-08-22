@@ -6,13 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://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@github.com/Adisa-Shobi/lupiya_project.git"
-  },
   "keywords": [
-    "node.js",
-    "express",
+    "n",
     "jwt",
     "login",
     "registration",
@@ -23,10 +18,6 @@
   ],
   "author": "Shobi",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Adisa-Shobi/lupiya_project/issues"
-  },
-  "homepage": "https://github.com/Adisa-Shobi/lupiya_project#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cookie-session": "^2.0.0",

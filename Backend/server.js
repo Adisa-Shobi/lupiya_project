@@ -3,7 +3,7 @@ const cors = require('cors');
 const cookieSession = require('cookie-session');
 const app = express();
 const db = require('./app/models');
-const dbConfig = require('./app/config/db.config');
+const dbConfig = require('./app/config/db.config.js');
 const Role = db.role;
 
 db.mongoose.connect(
@@ -69,9 +69,13 @@ app.use(
 );
 
 // Base endpoint
-app.get('/', (res, req) => {
-    res, json({ message: "Welcome to Lupiya!" })
+app.get('/', (req, res) => {
+    res.json({ message: "Welcome to Lupiya!" });
 });
+
+// routes
+require('./app/routes/auth.routes')(app);
+require('./app/routes/user.routes')(app);
 
 // Set port to listen 
 const PORT = process.env.PORT || 8080
