@@ -1,0 +1,27 @@
+<div class="col-md-6 ">
+    <div class="card card-container">
+        <img id="profile-img" src="https://icons-for-free.com/iconfiles/png/512/edit+document+edit+file+edited+editing+icon-1320191040211803620.png" class="profile-img-card" />
+        <form *ngIf="!isSuccessful" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+            <div class="form-group">
+                <label for="fullname">Full Name</label>
+                <input type="text" class="form-control" name="fullname" [(ngModel)]="form.fullname" required
+                    #fullname="ngModel" [ngClass]="{ 'is-invalid': f.submitted && fullname.errors }" />
+                <div class="invalid-feedback" *ngIf="fullname.errors && f.submitted">
+                    <div *ngIf="fullname.errors['required']">Full Name is required</div>
+                    <div *ngIf="fullname.errors['fullname']">
+                        Full Name not valid
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary btn-block">Update</button>
+            </div>
+            <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
+                Signup failed!<br />{{ errorMessage }}
+            </div>
+        </form>
+        <div class="alert alert-success" *ngIf="isSuccessful">
+            Your Full Name has been updated successfully!
+        </div>
+    </div>
+</div>

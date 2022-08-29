@@ -100,3 +100,28 @@ exports.signout = async (req, res) => {
         this.next(err);
     }
 };
+exports.updateFullname = (req, res) => {
+    const filter = { username: req.body.username };
+    const update = { fullname: req.body.fullname };
+    User.findOneAndUpdate(filter, update, {
+        returnOriginal: false
+    }).populate('roles', '-__v').exec((err, user) => {
+        if (err) {
+            res.status(500).send({ message: err });
+            return;
+        }
+        if (!user) {
+            return res.status(500).send({ message: "User not found." });
+        }
+        var authorities = [];
+        for (let i = 0; i < user.roles.length; i++) {
+            authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
+        }
+        res.status(200).send({
+            id: user._id,
+            username: user.username,
+            fullname: user.fullname,
+            role: authorities
+        });
+    });
+};

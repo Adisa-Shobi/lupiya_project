@@ -9,13 +9,17 @@ import { StorageService } from '../_services/storage.service';
 })
 export class BoardUserComponent implements OnInit {
   content?: string;
-  info: any;
+  user: any;
+  username?: string;
+  fullname?: string;
   constructor(private userService: UserService, private storageService: StorageService,) { }
   ngOnInit(): void {
-    this.info = this.storageService.getUser();
+    this.user = this.storageService.getUser();
     this.userService.getUserBoard().subscribe({
       next: data => {
-        this.content = data + "\nUsername: " + this.info.username; 
+        this.content = data;
+        this.username = " Username: " + this.user.username;
+        this.fullname = " Full Name: " + this.user.fullname;
       },
       error: err => {console.log(err)
         if (err.error) {
