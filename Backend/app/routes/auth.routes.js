@@ -1,17 +1,20 @@
 const { verifySignUp } = require("../middlewares");
 const controller = require("../controllers/auth.controller");
 module.exports = function (app) {
+    console.log("Authentication function called")
     app.use(function (req, res, next) {
         res.header(
             "Access-Control-Allow-Headers",
             "Origin, Content-Type, Accept"
         );
+        // res.header("Access-Control-Allow-Credentials", true);
+        // res.header("Access-Control-Allow-Methods", "POST");
         next();
     });
     app.post(
         "/api/auth/signup",
         [
-            verifySignUp.checkDuplicateUsernameOrEmail,
+            verifySignUp.checkDuplicateUsername,
             verifySignUp.checkRolesExisted
         ],
         controller.signup

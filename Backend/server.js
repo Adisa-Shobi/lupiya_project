@@ -6,6 +6,14 @@ const db = require('./app/models');
 const dbConfig = require('./app/config/db.config.js');
 const Role = db.role;
 
+var corsOptions = {
+    origin: "http://localhost:8081",
+    credentials: true,
+};
+app.options('*', cors(corsOptions))
+app.use(cors(corsOptions));
+
+
 db.mongoose.connect(
     `mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`, {
     useNewUrlParser: true,
@@ -49,11 +57,6 @@ function initial() {
         }
     });
 }
-
-var corsOptions = {
-    origin: 'https://localhost:8081'
-};
-app.use(cors(corsOptions));
 
 // Parse requests of type - application/json
 app.use(express.json());
