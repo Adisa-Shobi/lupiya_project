@@ -32,7 +32,7 @@ import { UpdateComponent } from './update/update.component';
     FormsModule,
     HttpClientModule
   ],
-  providers: [httpInterceptorProviders],
+  providers: [httpInterceptorProviders, LoginComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

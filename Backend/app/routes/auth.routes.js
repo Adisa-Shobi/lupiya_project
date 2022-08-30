@@ -21,5 +21,6 @@ module.exports = function (app) {
     );
     app.post("/api/auth/signin", controller.signin);
     app.post("/api/auth/signout", controller.signout);
-    app.post("/api/auth/update", [ authJwt.verifyToken ], controller.updateFullname)
+    app.post("/api/auth/update", [ authJwt.verifyToken ], controller.updateFullname);
+    app.post("/api/auth/deactivate", [ authJwt.verifyToken ], controller.deactivate)
 };

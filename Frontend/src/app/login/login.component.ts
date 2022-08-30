@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
   };
   isLoggedIn = false;
   isLoginFailed = false;
+  isDeactivatedSuccess = false;
   errorMessage = ''
   roles: string[] = [];
   constructor(private authService: AuthService, private storageService: StorageService) { }
@@ -30,15 +31,20 @@ export class LoginComponent implements OnInit {
       next: data => {
         this.storageService.saveUser(data);
         this.isLoginFailed = false;
+        this.isDeactivatedSuccess = false;
         this.isLoggedIn = true;
         this.roles = this.storageService.getUser().roles;
         this.reloadPage();
       },
       error: err => {
+        this.isDeactivatedSuccess = false;
         this.errorMessage = err.error.message;
         this.isLoginFailed = true;
       }
     });
+  }
+  showDeactivationMessage(): void {
+    this.isDeactivatedSuccess = true;
   }
   reloadPage(): void {
     window.location.reload();

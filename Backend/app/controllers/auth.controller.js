@@ -11,6 +11,7 @@ exports.signup = (req, res) => {
         username: req.body.username,
         fullname: req.body.fullname,
         password: bcrypt.hashSync(req.body.password, 8),
+        active: true
     });
     console.log("Request made to register user");
     user.save((err, user) => {
@@ -76,6 +77,9 @@ exports.signin = (req, res) => {
             if (!isPasswordValid) {
                 return res.status(401).send({ message: "Invalid Password!" });
             }
+            if (!user.active) {
+                return res.status(401).send({ message: "Account Deactivated!" });
+            }
             var token = jwt.sign({ id: user.id }, config.secret, {
                 expiresIn: 86400, //24 hrs
             });
@@ -88,6 +92,7 @@ exports.signin = (req, res) => {
                 id: user._id,
                 username: user.username,
                 fullname: user.fullname,
+                active: user.active,
                 role: authorities,
             });
         });
@@ -125,3 +130,28 @@ exports.updateFullname = (req, res) => {
         });
     });
 };
+exports.deactivate = (req, res) => {
+    const filter = { username: req.body.username };
+    const update = { active: false }
+    User.findOne(filter).exec((err, user) => {
+        if (err) {
+            res.status(500).send({ message: err });
+            return;
+        }
+        if (!user) {
+            return res.status(500).send({ message: "User not found." })
+        }
+        if (user.active) {
+            User.findByIdAndUpdate(user._id, update, (err) => {
+                if (err) {
+                    res.status(500).send({ message: err });
+                    return;
+                }
+                res.status(200).send({message: "User deactivated Successfuly"});
+            })
+            
+        }
+    })
+
+};
+

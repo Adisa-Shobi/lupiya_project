@@ -4,5 +4,17 @@
     <p>{{ username }}</p>
     <p>{{ fullname}}</p>
   </header>
-  <button href type="button" class="btn btn-primary" routerLink="/update">Change Full Name</button>
+  <div class="row">
+    <div class="col-md-6">
+      <button href type="button" class="btn btn-primary" routerLink="/update">Change Full Name</button>
+    </div>
+    <div class="col-md-6">
+      <button href type="button" class="btn btn-primary" (click)="deactivateUser()">Deactivate</button>
+    </div>
+  </div>
+  <div class="container">
+    <div class="alert alert-success" *ngIf="isDeactivatedSuccess">
+      Your account has been successfully deactivated.
+    </div>
+  </div>
 </div>

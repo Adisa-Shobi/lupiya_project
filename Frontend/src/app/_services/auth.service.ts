@@ -45,6 +45,15 @@ export class AuthService {
       httpOptions
     );
   }
+  deactivate(username: string): Observable<any> {
+    return this.http.post(
+      AUTH_API + 'deactivate',
+      {
+        username
+      },
+      httpOptions
+    );
+  }
   logout(): Observable<any> {
     return this.http.post(
       AUTH_API + 'signout', {}, httpOptions
